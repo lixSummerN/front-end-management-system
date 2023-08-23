@@ -1,11 +1,4 @@
-/*
- * @Author: lix lix@wujinbao.net
- * @Date: 2023-08-08 10:17:36
- * @LastEditors: lix lix@wujinbao.net
- * @LastEditTime: 2023-08-08 14:58:27
- * @FilePath: \my-app\src\router\index.js
- * @Description: 这是默认设置,请设置`customMade`, 打开koroFileHeader查看配置 进行设置: https://github.com/OBKoro1/koro1FileHeader/wiki/%E9%85%8D%E7%BD%AE
- */
+
 import Vue from 'vue'
 import VueRouter from 'vue-router'
 import Home from '../views/Home.vue'
@@ -30,14 +23,36 @@ const routes = [
         redirect: '/home',
         children: [
             //子路由
-            {path: 'home', component: Home},
-            {path: 'user',component: User},
-            {path: 'mall', component: Mall},
-            {path: 'page1', component: PageOne},
-            {path: 'page2', component: PageTwo},
+            {
+                path: 'home',
+                component: Home
+            },
+            {
+                path: 'user',
+                component: User
+            },
+            {
+                path: 'mall',
+                component: Mall
+            },
+            {
+                path: 'page1',
+                component: PageOne
+            },
+            {
+                path: 'page2',
+                component: PageTwo
+            },
         ]
     },
 ]
+
+// 解决ElementUI导航栏中的vue-router在3.0版本以上重复点菜单报错问题
+const originalPush = VueRouter.prototype.push
+VueRouter.prototype.push = function push(location) {
+    return originalPush.call(this, location).catch(err => err)
+}
+
 
 const router = new VueRouter({
     routes
